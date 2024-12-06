@@ -61,7 +61,7 @@
   <div class="container">
     <p id="balance">💰 Balance: $1000</p>
     <p id="crypto">🪙 Crypto Owned: 0</p>
-    <p id="price">📈 Current Price: $1000</p>
+    <p id="price">📈 Current Price: $500</p>
     <div>
       <button class="btn buy" onclick="buyCrypto()">Buy</button>
       <button class="btn sell" onclick="sellCrypto()">Sell</button>
@@ -80,9 +80,9 @@
   <script>
     let balance = 1000;
     let cryptoOwned = 0;
-    let cryptoPrice = 1000; // Start at the minimum price
+    let cryptoPrice = 500; // Start at the new minimum price
     const logElement = document.getElementById("log");
-    const MIN_PRICE = 500;
+    const MIN_PRICE = 500; // New minimum price
     const MAX_PRICE = 150000;
 
     function updateUI() {
@@ -133,7 +133,7 @@
     function resetGame() {
       balance = 1000;
       cryptoOwned = 0;
-      cryptoPrice = 1000; // Reset to minimum price
+      cryptoPrice = 500; // Reset to minimum price
       logElement.innerHTML = "No transactions yet.";
       updateUI();
     }
