@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Advanced Crypto Game</title>
+  <title>Crypto Game with Price Limits</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -57,11 +57,11 @@
   </style>
 </head>
 <body>
-  <h1>Advanced Crypto Game</h1>
+  <h1>Crypto Game</h1>
   <div class="container">
     <p id="balance">💰 Balance: $1000</p>
     <p id="crypto">🪙 Crypto Owned: 0</p>
-    <p id="price">📈 Current Price: $50</p>
+    <p id="price">📈 Current Price: $1000</p>
     <div>
       <button class="btn buy" onclick="buyCrypto()">Buy</button>
       <button class="btn sell" onclick="sellCrypto()">Sell</button>
@@ -80,8 +80,10 @@
   <script>
     let balance = 1000;
     let cryptoOwned = 0;
-    let cryptoPrice = 50;
+    let cryptoPrice = 1000; // Start at the minimum price
     const logElement = document.getElementById("log");
+    const MIN_PRICE = 1000;
+    const MAX_PRICE = 150000;
 
     function updateUI() {
       document.getElementById("balance").innerText = `💰 Balance: $${balance}`;
@@ -119,19 +121,19 @@
 
     function editPrice() {
       const newPrice = parseFloat(document.getElementById("newPrice").value);
-      if (!isNaN(newPrice) && newPrice > 0) {
+      if (!isNaN(newPrice) && newPrice >= MIN_PRICE && newPrice <= MAX_PRICE) {
         cryptoPrice = newPrice;
         logTransaction(`Price manually set to $${cryptoPrice}`);
         updateUI();
       } else {
-        alert("Please enter a valid price.");
+        alert(`Please enter a valid price between $${MIN_PRICE} and $${MAX_PRICE}.`);
       }
     }
 
     function resetGame() {
       balance = 1000;
       cryptoOwned = 0;
-      cryptoPrice = 50;
+      cryptoPrice = 1000; // Reset to minimum price
       logElement.innerHTML = "No transactions yet.";
       updateUI();
     }
@@ -140,4 +142,3 @@
   </script>
 </body>
 </html>
-
