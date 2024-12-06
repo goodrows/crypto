@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Crypto Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #1e1e2f;
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+    }
+    .crypto-box {
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 400px;
+      background-color: #2c2c3a;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .btn {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .buy {
+      background-color: #4caf50;
+      color: white;
+    }
+    .sell {
+      background-color: #f44336;
+      color: white;
+    }
+    .reset {
+      background-color: #2196f3;
+      color: white;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Fake Crypto Selling Game</h1>
+  <div class="crypto-box">
+    <p id="balance">💰 Balance: $1000</p>
+    <p id="crypto">🪙 Crypto Owned: 0</p>
+    <p id="price">📈 Current Price: $50</p>
+    <button class="btn buy" onclick="buyCrypto()">Buy</button>
+    <button class="btn sell" onclick="sellCrypto()">Sell</button>
+    <button class="btn reset" onclick="resetGame()">Reset Game</button>
+  </div>
+
+  <script>
+    let balance = 1000;
+    let cryptoOwned = 0;
+    let cryptoPrice = 50;
+
+    function updateUI() {
+      document.getElementById("balance").innerText = `💰 Balance: $${balance}`;
+      document.getElementById("crypto").innerText = `🪙 Crypto Owned: ${cryptoOwned}`;
+      document.getElementById("price").innerText = `📈 Current Price: $${cryptoPrice}`;
+    }
+
+    function getRandomPrice() {
+      return Math.floor(Math.random() * 100) + 10; // Price between $10 and $110
+    }
+
+    function buyCrypto() {
+      if (balance >= cryptoPrice) {
+        balance -= cryptoPrice;
+        cryptoOwned++;
+        cryptoPrice = getRandomPrice();
+        updateUI();
+      } else {
+        alert("Not enough balance to buy!");
+      }
+    }
+
+    function sellCrypto() {
+      if (cryptoOwned > 0) {
+        balance += cryptoPrice;
+        cryptoOwned--;
+        cryptoPrice = getRandomPrice();
+        updateUI();
+      } else {
+        alert("No crypto to sell!");
+      }
+    }
+
+    function resetGame() {
+      balance = 1000;
+      cryptoOwned = 0;
+      cryptoPrice = 50;
+      updateUI();
+    }
+
+    updateUI();
+  </script>
+</body>
+</html>
