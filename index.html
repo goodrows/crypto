@@ -84,7 +84,12 @@
       background-color: #fff; /* White background */
     }
 
-    .btn:hover {
+    .btn:disabled {
+      background-color: #ccc; /* Grey for disabled */
+      cursor: not-allowed;
+    }
+
+    .btn:hover:not(:disabled) {
       background-color: #e6e6e6; /* Light grey on hover */
     }
 
@@ -139,6 +144,7 @@
       <button class="btn buy" onclick="buyCrypto()">Buy</button>
       <button class="btn sell" onclick="sellCrypto()">Sell</button>
       <button class="btn reset" onclick="resetGame()">Reset</button>
+      <button id="workButton" class="btn work" onclick="work()">Work</button>
     </div>
 
     <div>
@@ -157,6 +163,7 @@
     let cryptoOwned = 0;
     let cryptoPrice = 500;
     const logElement = document.getElementById("log");
+    const workButton = document.getElementById("workButton");
     const MIN_PRICE = 500;
     const MAX_PRICE = 150000;
 
@@ -239,6 +246,16 @@
       chart.update();
       logElement.innerHTML = "No transactions yet.";
       updateUI();
+    }
+
+    function work() {
+      balance += 100;
+      logTransaction(`Worked and earned $100`);
+      updateUI();
+      workButton.disabled = true;
+      setTimeout(() => {
+        workButton.disabled = false;
+      }, 10000); // 10-second cooldown
     }
 
     // Auto price change simulation
