@@ -270,7 +270,21 @@
       updateUI();
     }
 
+    // Auto price change simulation
+    function autoChangePrice() {
+      const priceChange = (Math.random() * 2000 - 1000); // Random change between -1000 and 1000
+      const newPrice = Math.min(Math.max(cryptoPrice + priceChange, MIN_PRICE), MAX_PRICE); // Keep within bounds
+      if (newPrice !== cryptoPrice) {
+        cryptoPrice = newPrice;
+        priceHistory.push(cryptoPrice);
+        chart.data.labels.push(`Point ${priceHistory.length}`);
+        chart.update();
+        updateUI();
+      }
+    }
+
+    // Change price every 3 seconds
+    setInterval(autoChangePrice, 3000);
+
     updateUI();
   </script>
-</body>
-</html>
