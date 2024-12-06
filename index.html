@@ -108,16 +108,6 @@
       margin-bottom: 5px;
     }
 
-    input[type="number"] {
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-      width: calc(100% - 30px);
-      max-width: 200px;
-      margin-top: 10px;
-    }
-
     canvas {
       margin: 20px auto;
       max-width: 100%;
@@ -149,11 +139,6 @@
       <button class="btn buy" onclick="buyCrypto()">Buy</button>
       <button class="btn sell" onclick="sellCrypto()">Sell</button>
       <button class="btn reset" onclick="resetGame()">Reset</button>
-    </div>
-
-    <div>
-      <input id="newPrice" type="number" placeholder="Enter new price">
-      <button class="btn edit" onclick="editPrice()">Set Price</button>
     </div>
 
     <div>
@@ -245,20 +230,6 @@
       }
     }
 
-    function editPrice() {
-      const newPrice = parseFloat(document.getElementById("newPrice").value);
-      if (!isNaN(newPrice) && newPrice >= MIN_PRICE && newPrice <= MAX_PRICE) {
-        cryptoPrice = newPrice;
-        logTransaction(`Price set to $${cryptoPrice}`);
-        priceHistory.push(cryptoPrice);
-        chart.data.labels.push(`Point ${priceHistory.length}`);
-        chart.update();
-        updateUI();
-      } else {
-        alert(`Please enter a valid price between $${MIN_PRICE} and $${MAX_PRICE}.`);
-      }
-    }
-
     function resetGame() {
       balance = 1000;
       cryptoOwned = 0;
@@ -288,3 +259,5 @@
 
     updateUI();
   </script>
+</body>
+</html>
