@@ -18,6 +18,7 @@
       background-color: #0d1117;
       color: #c9d1d9;
       line-height: 1.6;
+      position: relative; /* Add this to position the Market button in the top-right */
     }
 
     header {
@@ -117,12 +118,33 @@
       margin: 20px auto;
       max-width: 100%;
     }
+
+    /* Market Button Style for Top-Right */
+    .market-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background-color: white;
+      color: black;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .market-btn:hover {
+      background-color: #e6e6e6;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Crypto Trader Pro</h1>
   </header>
+
+  <a href="https://example.com" class="market-btn" target="_blank">Market</a> <!-- Market Button -->
 
   <div class="container">
     <div class="stats">
@@ -144,7 +166,6 @@
       <button class="btn buy" onclick="buyCrypto()">Buy</button>
       <button class="btn sell" onclick="sellCrypto()">Sell</button>
       <button class="btn reset" onclick="resetGame()">Reset</button>
-      <a href="https://sites.google.com/view/crypto-house-market/home" class="btn market" target="_blank">Market</a>
     </div>
 
     <div>
