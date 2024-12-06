@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fake Crypto Game</title>
+  <title>Advanced Crypto Game</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,10 +13,10 @@
       margin: 0;
       padding: 20px;
     }
-    .crypto-box {
-      margin: 20px auto;
+    .container {
+      max-width: 600px;
+      margin: auto;
       padding: 20px;
-      max-width: 400px;
       background-color: #2c2c3a;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -37,30 +37,51 @@
       background-color: #f44336;
       color: white;
     }
+    .edit {
+      background-color: #ff9800;
+      color: white;
+    }
     .reset {
       background-color: #2196f3;
       color: white;
     }
-    .btn:hover {
-      opacity: 0.9;
+    .transaction-log {
+      text-align: left;
+      background-color: #1a1a2b;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 5px;
+      max-height: 150px;
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
-  <h1>Fake Crypto Selling Game</h1>
-  <div class="crypto-box">
+  <h1>Advanced Crypto Game</h1>
+  <div class="container">
     <p id="balance">💰 Balance: $1000</p>
     <p id="crypto">🪙 Crypto Owned: 0</p>
     <p id="price">📈 Current Price: $50</p>
-    <button class="btn buy" onclick="buyCrypto()">Buy</button>
-    <button class="btn sell" onclick="sellCrypto()">Sell</button>
-    <button class="btn reset" onclick="resetGame()">Reset Game</button>
+    <div>
+      <button class="btn buy" onclick="buyCrypto()">Buy</button>
+      <button class="btn sell" onclick="sellCrypto()">Sell</button>
+      <button class="btn reset" onclick="resetGame()">Reset Game</button>
+    </div>
+    <div>
+      <button class="btn edit" onclick="editPrice()">Edit Price</button>
+      <input id="newPrice" type="number" placeholder="Enter new price" style="margin-top: 10px; padding: 5px; border-radius: 5px; border: none; text-align: center;">
+    </div>
+    <div class="transaction-log">
+      <h3>Transaction Log</h3>
+      <div id="log">No transactions yet.</div>
+    </div>
   </div>
 
   <script>
     let balance = 1000;
     let cryptoOwned = 0;
     let cryptoPrice = 50;
+    const logElement = document.getElementById("log");
 
     function updateUI() {
       document.getElementById("balance").innerText = `💰 Balance: $${balance}`;
@@ -68,15 +89,17 @@
       document.getElementById("price").innerText = `📈 Current Price: $${cryptoPrice}`;
     }
 
-    function getRandomPrice() {
-      return Math.floor(Math.random() * 100) + 10; // Price between $10 and $110
+    function logTransaction(message) {
+      const newLog = document.createElement("p");
+      newLog.textContent = message;
+      logElement.appendChild(newLog);
     }
 
     function buyCrypto() {
       if (balance >= cryptoPrice) {
         balance -= cryptoPrice;
         cryptoOwned++;
-        cryptoPrice = getRandomPrice();
+        logTransaction(`Bought 1 crypto for $${cryptoPrice}`);
         updateUI();
       } else {
         alert("Not enough balance to buy!");
@@ -87,10 +110,21 @@
       if (cryptoOwned > 0) {
         balance += cryptoPrice;
         cryptoOwned--;
-        cryptoPrice = getRandomPrice();
+        logTransaction(`Sold 1 crypto for $${cryptoPrice}`);
         updateUI();
       } else {
         alert("No crypto to sell!");
+      }
+    }
+
+    function editPrice() {
+      const newPrice = parseFloat(document.getElementById("newPrice").value);
+      if (!isNaN(newPrice) && newPrice > 0) {
+        cryptoPrice = newPrice;
+        logTransaction(`Price manually set to $${cryptoPrice}`);
+        updateUI();
+      } else {
+        alert("Please enter a valid price.");
       }
     }
 
@@ -98,6 +132,7 @@
       balance = 1000;
       cryptoOwned = 0;
       cryptoPrice = 50;
+      logElement.innerHTML = "No transactions yet.";
       updateUI();
     }
 
@@ -105,3 +140,4 @@
   </script>
 </body>
 </html>
+
