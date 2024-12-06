@@ -41,7 +41,7 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .stats, .actions, .loan-section, .transaction-log {
+    .stats, .actions, .transaction-log {
       margin-bottom: 30px;
     }
 
@@ -146,14 +146,6 @@
       <button class="btn reset" onclick="resetGame()">Reset</button>
     </div>
 
-    <div class="loan-section">
-      <h3 style="color: #58a6ff;">Loan System</h3>
-      <p>💳 Current Loan: <span id="current-loan">$0</span></p>
-      <p>📈 Interest Accrued: <span id="interest">$0</span></p>
-      <button class="btn" onclick="takeLoan()">Take Loan</button>
-      <button class="btn" onclick="repayLoan()">Repay Loan</button>
-    </div>
-
     <div>
       <h3 style="color: #58a6ff;">Price History</h3>
       <canvas id="priceChart"></canvas>
@@ -169,10 +161,6 @@
     let balance = 1000;
     let cryptoOwned = 0;
     let cryptoPrice = 500;
-    let loan = 0;
-    let interest = 0;
-    const MAX_LOAN = 5000;
-    const INTEREST_RATE = 0.05; // 5% interest
     const logElement = document.getElementById("log");
     const MIN_PRICE = 500;
     const MAX_PRICE = 150000;
@@ -217,8 +205,6 @@
       document.getElementById("balance").innerText = `$${balance}`;
       document.getElementById("crypto").innerText = `${cryptoOwned}`;
       document.getElementById("price").innerText = `$${cryptoPrice}`;
-      document.getElementById("current-loan").innerText = `$${loan.toFixed(2)}`;
-      document.getElementById("interest").innerText = `$${interest.toFixed(2)}`;
     }
 
     function logTransaction(message) {
@@ -253,8 +239,6 @@
       balance = 1000;
       cryptoOwned = 0;
       cryptoPrice = 500;
-      loan = 0;
-      interest = 0;
       priceHistory.splice(0, priceHistory.length, cryptoPrice);
       chart.data.labels.splice(0, chart.data.labels.length, "Start");
       chart.update();
@@ -262,16 +246,19 @@
       updateUI();
     }
 
-    function takeLoan() {
-      if (loan > 0) {
-        alert("You already have a loan! Repay it before taking another.");
-        return;
-      }
-      loan = MAX_LOAN;
-      balance += loan;
-      logTransaction(`Took a loan of $${loan}`);
+    // Auto price change simulation
+    function autoChangePrice() {
+      const priceChange = (Math.random() * 2000 - 1000); // Random change between -1000 and 1000
+      cryptoPrice = Math.min(Math.max(cryptoPrice + priceChange, MIN_PRICE), MAX_PRICE);
+      priceHistory.push(cryptoPrice);
+      chart.data.labels.push(priceHistory.length);
+      chart.update();
       updateUI();
     }
 
-    function repayLoan() {
-      const totalDebt
+    setInterval(autoChangePrice, 3000); // Change price every 3 seconds
+
+    updateUI();
+  </script>
+</body>
+</html>
