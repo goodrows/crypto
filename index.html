@@ -1,10 +1,10 @@
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crypto Trader Pro</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     /* Global styles */
     * {
@@ -117,6 +117,11 @@
       max-width: 200px;
       margin-top: 10px;
     }
+
+    canvas {
+      margin: 20px auto;
+      max-width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -151,6 +156,11 @@
       <button class="btn edit" onclick="editPrice()">Set Price</button>
     </div>
 
+    <div>
+      <h3 style="color: #58a6ff;">Price History</h3>
+      <canvas id="priceChart"></canvas>
+    </div>
+
     <div class="transaction-log">
       <h3>Transaction Log</h3>
       <div id="log">No transactions yet.</div>
@@ -164,6 +174,42 @@
     const logElement = document.getElementById("log");
     const MIN_PRICE = 500;
     const MAX_PRICE = 150000;
+
+    // Chart setup
+    const ctx = document.getElementById("priceChart").getContext("2d");
+    const priceHistory = [cryptoPrice];
+    const chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["Start"], // Labels for the x-axis
+        datasets: [{
+          label: "Crypto Price ($)",
+          data: priceHistory,
+          borderColor: "#58a6ff",
+          backgroundColor: "rgba(88, 166, 255, 0.2)",
+          borderWidth: 2,
+          tension: 0.2, // Smooth line
+        }],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: "#c9d1d9",
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: { color: "#c9d1d9" },
+          },
+          y: {
+            ticks: { color: "#c9d1d9" },
+          },
+        },
+      },
+    });
 
     function updateUI() {
       document.getElementById("balance").innerText = `$${balance}`;
@@ -204,6 +250,9 @@
       if (!isNaN(newPrice) && newPrice >= MIN_PRICE && newPrice <= MAX_PRICE) {
         cryptoPrice = newPrice;
         logTransaction(`Price set to $${cryptoPrice}`);
+        priceHistory.push(cryptoPrice);
+        chart.data.labels.push(`Point ${priceHistory.length}`);
+        chart.update();
         updateUI();
       } else {
         alert(`Please enter a valid price between $${MIN_PRICE} and $${MAX_PRICE}.`);
@@ -214,6 +263,9 @@
       balance = 1000;
       cryptoOwned = 0;
       cryptoPrice = 500;
+      priceHistory.splice(0, priceHistory.length, cryptoPrice);
+      chart.data.labels.splice(0, chart.data.labels.length, "Start");
+      chart.update();
       logElement.innerHTML = "No transactions yet.";
       updateUI();
     }
