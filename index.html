@@ -6,7 +6,6 @@
   <title>Crypto Trader Pro</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /* Global styles */
     * {
       margin: 0;
       padding: 0;
@@ -18,12 +17,12 @@
       background-color: #0d1117;
       color: #c9d1d9;
       line-height: 1.6;
+      text-align: center;
     }
 
     header {
       background-color: #161b22;
       padding: 20px;
-      text-align: center;
     }
 
     h1 {
@@ -38,29 +37,6 @@
       border-radius: 10px;
     }
 
-    .work-container {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 30px;
-    }
-
-    .stat {
-      flex: 1;
-      text-align: center;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 30px;
-    }
-
     .btn {
       padding: 12px 20px;
       background-color: white;
@@ -68,11 +44,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 1rem;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #e6e6e6;
+      margin: 5px;
     }
 
     .btn:disabled {
@@ -80,38 +52,17 @@
       cursor: not-allowed;
     }
 
-    .market {
-      background-color: #0d1117;
-      padding: 20px;
-      border-radius: 10px;
-      margin-top: 40px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .market h2 {
-      color: #58a6ff;
-      text-align: center;
-    }
-
-    .market-items {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 15px;
-      margin-top: 20px;
-    }
-
     .market-item {
       background-color: #161b22;
       padding: 15px;
       border-radius: 5px;
-      text-align: center;
+      margin: 10px auto;
       width: 200px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    .market-item p {
-      margin-bottom: 10px;
+    .work-container {
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -122,60 +73,43 @@
 </header>
 
 <div class="container">
-  
   <!-- Work Button at the Top -->
   <div class="work-container">
     <button id="work-btn" class="btn" onclick="work()">Work (+$1000)</button>
     <p id="work-timer" style="color: #ff5555; display: none;">Cooldown: 3:00</p>
   </div>
 
-  <div class="stats">
-    <div class="stat">
-      <h2>💰 Balance</h2>
-      <p id="balance">$1000</p>
-    </div>
-    <div class="stat">
-      <h2>🪙 Crypto Owned</h2>
-      <p id="crypto">0</p>
-    </div>
-    <div class="stat">
-      <h2>📈 Current Price</h2>
-      <p id="price">$500</p>
-    </div>
-  </div>
+  <h2>💰 Balance: <span id="balance">$1000</span></h2>
+  <h2>🪙 Crypto Owned: <span id="crypto">0</span></h2>
+  <h2>📈 Crypto Price: <span id="price">$500</span></h2>
 
-  <div class="actions">
-    <button class="btn" onclick="buyCrypto()">Buy Crypto</button>
-    <button class="btn" onclick="sellCrypto()">Sell Crypto</button>
-    <button class="btn" onclick="resetGame()">Reset</button>
-  </div>
+  <button class="btn" onclick="buyCrypto()">Buy Crypto</button>
+  <button class="btn" onclick="sellCrypto()">Sell Crypto</button>
+  <button class="btn" onclick="resetGame()">Reset</button>
 
   <canvas id="priceChart"></canvas>
 
-  <!-- MARKET SECTION -->
   <div class="market">
     <h2>🏡🏎️ Market: Buy Houses & Cars</h2>
-    <div class="market-items">
-      <div class="market-item">
-        <p>🚗 Sports Car</p>
-        <p>Price: $50,000</p>
-        <button class="btn buy-btn" onclick="buyItem(50000)">Buy</button>
-      </div>
-      <div class="market-item">
-        <p>🚙 SUV</p>
-        <p>Price: $30,000</p>
-        <button class="btn buy-btn" onclick="buyItem(30000)">Buy</button>
-      </div>
-      <div class="market-item">
-        <p>🏠 Small House</p>
-        <p>Price: $150,000</p>
-        <button class="btn buy-btn" onclick="buyItem(150000)">Buy</button>
-      </div>
-      <div class="market-item">
-        <p>🏡 Luxury Villa</p>
-        <p>Price: $500,000</p>
-        <button class="btn buy-btn" onclick="buyItem(500000)">Buy</button>
-      </div>
+    <div class="market-item">
+      <p>🚗 Sports Car</p>
+      <p>Price: $50,000</p>
+      <button class="btn buy-btn" onclick="buyItem(50000)">Buy</button>
+    </div>
+    <div class="market-item">
+      <p>🚙 SUV</p>
+      <p>Price: $30,000</p>
+      <button class="btn buy-btn" onclick="buyItem(30000)">Buy</button>
+    </div>
+    <div class="market-item">
+      <p>🏠 Small House</p>
+      <p>Price: $150,000</p>
+      <button class="btn buy-btn" onclick="buyItem(150000)">Buy</button>
+    </div>
+    <div class="market-item">
+      <p>🏡 Luxury Villa</p>
+      <p>Price: $500,000</p>
+      <button class="btn buy-btn" onclick="buyItem(500000)">Buy</button>
     </div>
   </div>
 
@@ -214,6 +148,8 @@
 
   function updateUI() {
     document.getElementById("balance").innerText = `$${balance}`;
+    document.getElementById("crypto").innerText = `${cryptoOwned}`;
+    document.getElementById("price").innerText = `$${cryptoPrice}`;
 
     document.querySelectorAll('.buy-btn').forEach(button => {
       const price = parseFloat(button.parentElement.children[1].innerText.replace('Price: $', ''));
@@ -272,6 +208,30 @@
         }
       }, 1000);
     }
+  }
+
+  function changePrice() {
+    const change = Math.floor(Math.random() * 1000) - 500;
+    cryptoPrice = Math.max(500, Math.min(150000, cryptoPrice + change));
+    priceHistory.push(cryptoPrice);
+    if (priceHistory.length > 10) priceHistory.shift();
+
+    chart.data.labels.push("");
+    if (chart.data.labels.length > 10) chart.data.labels.shift();
+    
+    chart.update();
+    updateUI();
+  }
+
+  setInterval(changePrice, 5000);
+
+  function resetGame() {
+    balance = 1000;
+    cryptoOwned = 0;
+    cryptoPrice = 500;
+    priceHistory.length = 0;
+    priceHistory.push(cryptoPrice);
+    updateUI();
   }
 
   updateUI();
