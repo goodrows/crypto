@@ -38,6 +38,11 @@
       border-radius: 10px;
     }
 
+    .work-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .stats {
       display: flex;
       justify-content: space-between;
@@ -75,11 +80,6 @@
       cursor: not-allowed;
     }
 
-    .work-container {
-      text-align: center;
-      margin-top: 20px;
-    }
-
     .market {
       background-color: #0d1117;
       padding: 20px;
@@ -106,7 +106,7 @@
       padding: 15px;
       border-radius: 5px;
       text-align: center;
-      width: 180px;
+      width: 200px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     }
 
@@ -122,6 +122,13 @@
 </header>
 
 <div class="container">
+  
+  <!-- Work Button at the Top -->
+  <div class="work-container">
+    <button id="work-btn" class="btn" onclick="work()">Work (+$1000)</button>
+    <p id="work-timer" style="color: #ff5555; display: none;">Cooldown: 3:00</p>
+  </div>
+
   <div class="stats">
     <div class="stat">
       <h2>💰 Balance</h2>
@@ -138,37 +145,36 @@
   </div>
 
   <div class="actions">
-    <button class="btn" onclick="buyCrypto()">Buy</button>
-    <button class="btn" onclick="sellCrypto()">Sell</button>
+    <button class="btn" onclick="buyCrypto()">Buy Crypto</button>
+    <button class="btn" onclick="sellCrypto()">Sell Crypto</button>
     <button class="btn" onclick="resetGame()">Reset</button>
-  </div>
-
-  <!-- Work Button Section -->
-  <div class="work-container">
-    <button id="work-btn" class="btn" onclick="work()">Work (+$1000)</button>
-    <p id="work-timer" style="color: #ff5555; display: none;">Cooldown: 3:00</p>
   </div>
 
   <canvas id="priceChart"></canvas>
 
   <!-- MARKET SECTION -->
   <div class="market">
-    <h2>Market</h2>
+    <h2>🏡🏎️ Market: Buy Houses & Cars</h2>
     <div class="market-items">
       <div class="market-item">
-        <p>Bitcoin (BTC)</p>
+        <p>🚗 Sports Car</p>
         <p>Price: $50,000</p>
         <button class="btn buy-btn" onclick="buyItem(50000)">Buy</button>
       </div>
       <div class="market-item">
-        <p>Ethereum (ETH)</p>
-        <p>Price: $3,500</p>
-        <button class="btn buy-btn" onclick="buyItem(3500)">Buy</button>
+        <p>🚙 SUV</p>
+        <p>Price: $30,000</p>
+        <button class="btn buy-btn" onclick="buyItem(30000)">Buy</button>
       </div>
       <div class="market-item">
-        <p>Dogecoin (DOGE)</p>
-        <p>Price: $0.15</p>
-        <button class="btn buy-btn" onclick="buyItem(0.15)">Buy</button>
+        <p>🏠 Small House</p>
+        <p>Price: $150,000</p>
+        <button class="btn buy-btn" onclick="buyItem(150000)">Buy</button>
+      </div>
+      <div class="market-item">
+        <p>🏡 Luxury Villa</p>
+        <p>Price: $500,000</p>
+        <button class="btn buy-btn" onclick="buyItem(500000)">Buy</button>
       </div>
     </div>
   </div>
@@ -179,8 +185,6 @@
   let balance = 1000;
   let cryptoOwned = 0;
   let cryptoPrice = 500;
-  const MIN_PRICE = 500;
-  const MAX_PRICE = 150000;
   let workCooldown = false;
 
   const ctx = document.getElementById("priceChart").getContext("2d");
@@ -210,8 +214,6 @@
 
   function updateUI() {
     document.getElementById("balance").innerText = `$${balance}`;
-    document.getElementById("crypto").innerText = `${cryptoOwned}`;
-    document.getElementById("price").innerText = `$${cryptoPrice}`;
 
     document.querySelectorAll('.buy-btn').forEach(button => {
       const price = parseFloat(button.parentElement.children[1].innerText.replace('Price: $', ''));
