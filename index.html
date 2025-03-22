@@ -18,19 +18,16 @@
       background-color: #0d1117;
       color: #c9d1d9;
       line-height: 1.6;
-      position: relative; /* Add this to position the Market button in the top-right */
     }
 
     header {
       background-color: #161b22;
       padding: 20px;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
 
-    header h1 {
-      font-size: 1.8rem;
+    h1 {
       color: #58a6ff;
-      text-align: center;
     }
 
     .container {
@@ -39,248 +36,244 @@
       padding: 20px;
       background-color: #161b22;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .stats, .actions, .transaction-log {
-      margin-bottom: 30px;
     }
 
     .stats {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      margin-bottom: 30px;
     }
 
     .stat {
       flex: 1;
-      margin: 0 10px;
       text-align: center;
-    }
-
-    .stat h2 {
-      font-size: 1.4rem;
-      color: #58a6ff;
-    }
-
-    .stat p {
-      font-size: 1.2rem;
-      margin-top: 10px;
     }
 
     .actions {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       gap: 10px;
+      margin-bottom: 30px;
     }
 
     .btn {
       padding: 12px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      color: #000; /* Black text */
-      background-color: #fff; /* White background */
-    }
-
-    .btn:disabled {
-      background-color: #ccc; /* Grey for disabled */
-      cursor: not-allowed;
-    }
-
-    .btn:hover:not(:disabled) {
-      background-color: #e6e6e6; /* Light grey on hover */
-    }
-
-    .transaction-log {
-      background-color: #0d1117;
-      padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      max-height: 200px;
-      overflow-y: auto;
-    }
-
-    .transaction-log h3 {
-      margin-bottom: 10px;
-      color: #58a6ff;
-      text-align: left;
-    }
-
-    .transaction-log p {
-      font-size: 0.9rem;
-      margin-bottom: 5px;
-    }
-
-    canvas {
-      margin: 20px auto;
-      max-width: 100%;
-    }
-
-    /* Market Button Style for Top-Right */
-    .market-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
       background-color: white;
       color: black;
       border-radius: 5px;
-      text-decoration: none;
-      font-size: 1rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-size: 1rem;
+      transition: 0.3s;
     }
 
-    .market-btn:hover {
+    .btn:hover {
       background-color: #e6e6e6;
+    }
+
+    .btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .work-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .market {
+      background-color: #0d1117;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 40px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .market h2 {
+      color: #58a6ff;
+      text-align: center;
+    }
+
+    .market-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .market-item {
+      background-color: #161b22;
+      padding: 15px;
+      border-radius: 5px;
+      text-align: center;
+      width: 180px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .market-item p {
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Crypto Trader Pro</h1>
-  </header>
 
-  <a href="https://sites.google.com/view/crypto-house-market/home" class="market-btn" target="_blank">Market</a> <!-- Market Button -->
+<header>
+  <h1>Crypto Trader Pro</h1>
+</header>
 
-  <div class="container">
-    <div class="stats">
-      <div class="stat">
-        <h2>💰 Balance</h2>
-        <p id="balance">$1000</p>
-      </div>
-      <div class="stat">
-        <h2>🪙 Crypto Owned</h2>
-        <p id="crypto">0</p>
-      </div>
-      <div class="stat">
-        <h2>📈 Current Price</h2>
-        <p id="price">$500</p>
-      </div>
+<div class="container">
+  <div class="stats">
+    <div class="stat">
+      <h2>💰 Balance</h2>
+      <p id="balance">$1000</p>
     </div>
-
-    <div class="actions">
-      <button class="btn buy" onclick="buyCrypto()">Buy</button>
-      <button class="btn sell" onclick="sellCrypto()">Sell</button>
-      <button class="btn reset" onclick="resetGame()">Reset</button>
+    <div class="stat">
+      <h2>🪙 Crypto Owned</h2>
+      <p id="crypto">0</p>
     </div>
-
-    <div>
-      <h3 style="color: #58a6ff;">Price History</h3>
-      <canvas id="priceChart"></canvas>
-    </div>
-
-    <div class="transaction-log">
-      <h3>Transaction Log</h3>
-      <div id="log">No transactions yet.</div>
+    <div class="stat">
+      <h2>📈 Current Price</h2>
+      <p id="price">$500</p>
     </div>
   </div>
 
-  <script>
-    let balance = 1000;
-    let cryptoOwned = 0;
-    let cryptoPrice = 500;
-    const logElement = document.getElementById("log");
-    const MIN_PRICE = 500;
-    const MAX_PRICE = 150000;
+  <div class="actions">
+    <button class="btn" onclick="buyCrypto()">Buy</button>
+    <button class="btn" onclick="sellCrypto()">Sell</button>
+    <button class="btn" onclick="resetGame()">Reset</button>
+  </div>
 
-    // Chart setup
-    const ctx = document.getElementById("priceChart").getContext("2d");
-    const priceHistory = [cryptoPrice];
-    const chart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: ["Start"], // Labels for the x-axis
-        datasets: [{
-          label: "Crypto Price ($)",
-          data: priceHistory,
-          borderColor: "#58a6ff",
-          backgroundColor: "rgba(88, 166, 255, 0.2)",
-          borderWidth: 2,
-          tension: 0.2, // Smooth line
-        }],
+  <!-- Work Button Section -->
+  <div class="work-container">
+    <button id="work-btn" class="btn" onclick="work()">Work (+$1000)</button>
+    <p id="work-timer" style="color: #ff5555; display: none;">Cooldown: 3:00</p>
+  </div>
+
+  <canvas id="priceChart"></canvas>
+
+  <!-- MARKET SECTION -->
+  <div class="market">
+    <h2>Market</h2>
+    <div class="market-items">
+      <div class="market-item">
+        <p>Bitcoin (BTC)</p>
+        <p>Price: $50,000</p>
+        <button class="btn buy-btn" onclick="buyItem(50000)">Buy</button>
+      </div>
+      <div class="market-item">
+        <p>Ethereum (ETH)</p>
+        <p>Price: $3,500</p>
+        <button class="btn buy-btn" onclick="buyItem(3500)">Buy</button>
+      </div>
+      <div class="market-item">
+        <p>Dogecoin (DOGE)</p>
+        <p>Price: $0.15</p>
+        <button class="btn buy-btn" onclick="buyItem(0.15)">Buy</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let balance = 1000;
+  let cryptoOwned = 0;
+  let cryptoPrice = 500;
+  const MIN_PRICE = 500;
+  const MAX_PRICE = 150000;
+  let workCooldown = false;
+
+  const ctx = document.getElementById("priceChart").getContext("2d");
+  const priceHistory = [cryptoPrice];
+
+  const chart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ["Start"],
+      datasets: [{
+        label: "Crypto Price ($)",
+        data: priceHistory,
+        borderColor: "#58a6ff",
+        backgroundColor: "rgba(88, 166, 255, 0.2)",
+        borderWidth: 2,
+        tension: 0.2,
+      }],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: { ticks: { color: "#c9d1d9" } },
+        y: { ticks: { color: "#c9d1d9" } },
       },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            labels: {
-              color: "#c9d1d9",
-            },
-          },
-        },
-        scales: {
-          x: {
-            ticks: { color: "#c9d1d9" },
-          },
-          y: {
-            ticks: { color: "#c9d1d9" },
-          },
-        },
-      },
+    },
+  });
+
+  function updateUI() {
+    document.getElementById("balance").innerText = `$${balance}`;
+    document.getElementById("crypto").innerText = `${cryptoOwned}`;
+    document.getElementById("price").innerText = `$${cryptoPrice}`;
+
+    document.querySelectorAll('.buy-btn').forEach(button => {
+      const price = parseFloat(button.parentElement.children[1].innerText.replace('Price: $', ''));
+      button.disabled = balance < price;
     });
+  }
 
-    function updateUI() {
-      document.getElementById("balance").innerText = `$${balance}`;
-      document.getElementById("crypto").innerText = `${cryptoOwned}`;
-      document.getElementById("price").innerText = `$${cryptoPrice}`;
-    }
-
-    function logTransaction(message) {
-      const newLog = document.createElement("p");
-      newLog.textContent = message;
-      logElement.appendChild(newLog);
-    }
-
-    function buyCrypto() {
-      if (balance >= cryptoPrice) {
-        balance -= cryptoPrice;
-        cryptoOwned++;
-        logTransaction(`Bought 1 crypto for $${cryptoPrice}`);
-        updateUI();
-      } else {
-        alert("Not enough balance to buy!");
-      }
-    }
-
-    function sellCrypto() {
-      if (cryptoOwned > 0) {
-        balance += cryptoPrice;
-        cryptoOwned--;
-        logTransaction(`Sold 1 crypto for $${cryptoPrice}`);
-        updateUI();
-      } else {
-        alert("No crypto to sell!");
-      }
-    }
-
-    function resetGame() {
-      balance = 1000;
-      cryptoOwned = 0;
-      cryptoPrice = 500;
-      priceHistory.splice(0, priceHistory.length, cryptoPrice);
-      chart.data.labels.splice(0, chart.data.labels.length, "Start");
-      chart.update();
-      logElement.innerHTML = "No transactions yet.";
+  function buyCrypto() {
+    if (balance >= cryptoPrice) {
+      balance -= cryptoPrice;
+      cryptoOwned++;
       updateUI();
+    } else {
+      alert("Not enough balance!");
     }
+  }
 
-    // Auto price change simulation
-    function autoChangePrice() {
-      const priceChange = (Math.random() * 2000 - 1000); // Random change between -1000 and 1000
-      cryptoPrice = Math.min(Math.max(cryptoPrice + priceChange, MIN_PRICE), MAX_PRICE);
-      priceHistory.push(cryptoPrice);
-      chart.data.labels.push(priceHistory.length);
-      chart.update();
+  function sellCrypto() {
+    if (cryptoOwned > 0) {
+      balance += cryptoPrice;
+      cryptoOwned--;
       updateUI();
+    } else {
+      alert("No crypto to sell!");
     }
+  }
 
-    setInterval(autoChangePrice, 3000); // Change price every 3 seconds
+  function buyItem(price) {
+    if (balance >= price) {
+      balance -= price;
+      alert(`You bought an item for $${price}!`);
+      updateUI();
+    } else {
+      alert("Not enough money!");
+    }
+  }
 
-    updateUI();
-  </script>
+  function work() {
+    if (!workCooldown) {
+      balance += 1000;
+      updateUI();
+      workCooldown = true;
+      document.getElementById("work-btn").disabled = true;
+      let timeLeft = 180;
+      const timer = document.getElementById("work-timer");
+      timer.style.display = "block";
+
+      const interval = setInterval(() => {
+        timeLeft--;
+        timer.innerText = `Cooldown: ${Math.floor(timeLeft / 60)}:${(timeLeft % 60).toString().padStart(2, '0')}`;
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          workCooldown = false;
+          document.getElementById("work-btn").disabled = false;
+          timer.style.display = "none";
+        }
+      }, 1000);
+    }
+  }
+
+  updateUI();
+</script>
+
 </body>
 </html>
